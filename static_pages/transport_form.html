@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Transport CO₂ Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>🚗 Smart Transportation Emission Predictor</h2>
+
+        <form action="/predict" method="POST">
+
+            <label>Vehicle type</label>
+            <select id="vehicle_type" name="vehicle_type" onchange="updateValues()">
+            <option value="Car" selected>Car</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="Bus">Bus</option>
+            <option value="Truck">Truck</option>
+            <option value="Van">Van</option>
+        </select>
+
+            <label>Fuel type</label>
+            <select id="fuel_type" name="fuel_type" onchange="updateValues()">
+            <option value="Petrol" selected>Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="CNG">CNG</option>
+            <option value="Electric">Electric</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+
+            <label>Fuel consumption (L / 100 km)</label>
+            <input type="range" id="fuel" name="fuel" min="0" max="40" step="0.1" value="7.5" oninput="fuel_out.value = fuel.value">
+            <output id="fuel_out">7.5</output>
+
+            <label>Average speed (km/h)</label>
+            <input type="range" id="speed" name="speed" min="20" max="120" step="1" value="50" oninput="speed_out.value = speed.value">
+            <output id="speed_out">50</output>
+
+            <label>Distance (km)</label>
+            <input type="range" id="distance" name="distance" min="1" max="500" step="1" value="10" oninput="dist_out.value = distance.value">
+            <output id="dist_out">10</output>
+
+            <label>Traffic level</label>
+            <select name="traffic">
+            <option value="1">1 — Very Light</option>
+            <option value="2" selected>2 — Light</option>
+            <option value="3">3 — Moderate</option>
+            <option value="4">4 — Heavy</option>
+            <option value="5">5 — Severe</option>
+        </select>
+
+            <button type="submit">Predict Emissions</button>
+        </form>
+
+        <a href="/" class="back-btn">Home</a>
+    </div>
+
+    <script>
+        function updateValues() {
+            let vehicle = document.getElementById("vehicle_type").value;
+            let fuel = document.getElementById("fuel_type").value;
+
+            const consumption = {
+                "Car": {
+                    Petrol: 7.5,
+                    Diesel: 6.2,
+                    CNG: 7.0,
+                    Electric: 0,
+                    Hybrid: 5.0
+                },
+                "Motorcycle": {
+                    Petrol: 3.0,
+                    Diesel: 0,
+                    CNG: 0,
+                    Electric: 0,
+                    Hybrid: 2.5
+                },
+                "Bus": {
+                    Petrol: 0,
+                    Diesel: 25,
+                    CNG: 20,
+                    Electric: 0,
+                    Hybrid: 18
+                },
+                "Truck": {
+                    Petrol: 0,
+                    Diesel: 30,
+                    CNG: 22,
+                    Electric: 0,
+                    Hybrid: 20
+                },
+                "Van": {
+                    Petrol: 10,
+                    Diesel: 9,
+                    CNG: 12,
+                    Electric: 0,
+                    Hybrid: 8
+                }
+            };
+
+            let fuel_input = document.getElementById("fuel");
+            let fuel_out = document.getElementById("fuel_out");
+
+            let newValue = consumption[vehicle][fuel];
+            if (newValue !== undefined) {
+                fuel_input.value = newValue;
+                fuel_out.value = newValue;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

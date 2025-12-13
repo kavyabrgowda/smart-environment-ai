@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Carbon Footprint Calculator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>🌱 Carbon Footprint Calculator (monthly)</h2>
+        <p>Slide to enter estimated monthly usage.</p>
+
+        <form action="/carbon/calc" method="POST">
+            <label>Electricity (kWh / month)</label>
+            <input type="range" id="electricity" name="electricity" min="50" max="2000" step="10" value="300" oninput="elec_out.value = electricity.value">
+            <output id="elec_out">300</output>
+
+            <label>LPG (kg / month)</label>
+            <input type="range" id="lpg" name="lpg" min="0" max="100" step="1" value="10" oninput="lpg_out.value = lpg.value">
+            <output id="lpg_out">10</output>
+
+            <label>Waste (kg / month)</label>
+            <input type="range" id="waste" name="waste" min="1" max="200" step="1" value="20" oninput="waste_out.value = waste.value">
+            <output id="waste_out">20</output>
+
+            <label>Vehicle distance (km / month)</label>
+            <input type="range" id="km" name="km" min="0" max="5000" step="10" value="200" oninput="km_out.value = km.value">
+            <output id="km_out">200</output>
+
+            <button type="submit">Calculate Footprint</button>
+        </form>
+
+        <a href="/" class="back-btn">Home</a>
+    </div>
+</body>
+
+</html>
